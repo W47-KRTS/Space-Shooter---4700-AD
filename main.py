@@ -27,11 +27,13 @@ meteor_surf = pygame.image.load(join('images','meteor.png')).convert_alpha()
 meteor_rect = meteor_surf.get_frect(center = (window_width/2, window_height/2))
 
 laser_surf = pygame.image.load(join('images','laser.png')).convert_alpha()
-laser_rect = laser_surf.get_frect(center = (window_width/2, window_height/-50))
+laser_rect = laser_surf.get_frect(bottomleft = (20, window_height - 50))
 
 star_surf =  pygame.image.load(join('images','star.png')).convert_alpha()
 star_position = [(randint(0,window_width), randint(0, window_height)) for i in range (50)]
 # drawing stars in random positions
+
+
 
 while running:
     # event loop
@@ -47,7 +49,7 @@ while running:
         display_surface.blit(star_surf, position)
         
     display_surface.blit(meteor_surf, meteor_rect) # display meteor
-    display_surface.blit(laser_surf, meteor_rect) # display meteor
+    display_surface.blit(laser_surf, laser_rect) # display laser
 
     # player movement
     player_rect.x += player_direction * 1
@@ -56,6 +58,7 @@ while running:
     display_surface.blit(player_surf, player_rect) # display the player ship
 
     pygame.display.update() # update the entire window
+
     
 
 pygame.quit() # the opposite of pygame.init()
