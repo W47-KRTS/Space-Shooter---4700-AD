@@ -49,14 +49,13 @@ while running:
     display_surface.blit(meteor_surf, meteor_rect) # display meteor
     display_surface.blit(laser_surf, meteor_rect) # display meteor
 
-    pygame.display.update() # update the entire window
-    
-
     # player movement
-    player_rect.x += player_direction * 0.4
+    player_rect.x += player_direction * 1
     if player_rect.right > window_width or player_rect.left < 0: # keeping the player ship onto screen
         player_direction *= -1 
     display_surface.blit(player_surf, player_rect) # display the player ship
 
+    pygame.display.update() # update the entire window
+    
 
 pygame.quit() # the opposite of pygame.init()
