@@ -1,7 +1,14 @@
 import pygame
 from os.path import join   
+
 from random import randint  
-# ramas la 54:27
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self, *groups):
+        super().__init__(*groups)
+        self.image
+        self.rect
+# ramas la 1:57:00  
 
 # general setup
 
