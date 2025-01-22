@@ -23,7 +23,7 @@ player_surf = pygame.image.load(join('images','player.png')).convert_alpha()
 player_rect = player_surf.get_frect(midbottom = (window_width/2, window_height / 2))
 # using frectangle to determine the position
 
-player_direction = pygame.math.Vector2(1, 1)
+player_direction = pygame.math.Vector2() # (0,0)
 player_speed = 300
 
 
@@ -46,7 +46,17 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False # variable to close the game
+        #if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
+        #    print(1)
+        #if event.type == pygame.MOUSEMOTION:
+        #    player_rect.center = event.pos
 
+    # input
+    keys = pygame.key.get_pressed()
+    player_direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])  # player to right when right key is pressed
+    player_direction.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])
+
+    player_rect.center += player_direction * player_speed * dt
 
     # draw the game
     display_surface.fill('skyblue3', rect=None, special_flags=0) # display the background color 
@@ -55,13 +65,6 @@ while running:
         
     display_surface.blit(meteor_surf, meteor_rect) # display meteor
     display_surface.blit(laser_surf, laser_rect) # display laser
-
-    # player movement
-    if player_rect.bottom >= window_height or player_rect.top <= 0:
-        player_direction.y *= -1
-    if player_rect.right >= window_width or player_rect.left <= 0:
-        player_direction.x *= -1
-    player_rect.center += player_direction * player_speed * dt
     display_surface.blit(player_surf, player_rect) # display the player ship
 
     pygame.display.update() # update the entire window
