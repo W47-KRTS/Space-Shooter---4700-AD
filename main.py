@@ -25,7 +25,9 @@ surf = pygame.Surface((100, 200))
 surf.fill("orange")
 x = 100
 
-player = Player()
+
+all_sprites = pygame.sprite.Group()
+player = Player(all_sprites)
 
 
 # importing images
@@ -80,9 +82,9 @@ while running:
     display_surface.blit(meteor_surf, meteor_rect) # display meteor
     display_surface.blit(laser_surf, laser_rect) # display laser
     # display_surface.blit(player_surf, player_rect) # display the player ship
-    display_surface.blit(player.image, player.rect)
+    all_sprites.draw(display_surface)
 
-    
+
     pygame.display.update() # update the entire window
 
     
