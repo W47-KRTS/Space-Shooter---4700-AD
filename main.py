@@ -9,12 +9,14 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load(join('images', 'player.png')).convert_alpha() #stores the surface
         self.rect = self.image.get_frect(midbottom = (window_width/2, window_height / 2))
         self.direction = pygame.Vector2()
+        self.speed = 300
 
     def update(self, *args, **kwargs):
         keys = pygame.key.get_pressed()
         self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
         self.direction.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_DOWN])
-
+        self.direction = self.direction.normalize() if self.direction else self.direction
+        self.rect.center += self.direction * self.speed * dt
 
 # ramas la 1:57:00
 
