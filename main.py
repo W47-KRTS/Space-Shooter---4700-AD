@@ -6,8 +6,8 @@ from random import randint
 class Player(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
-        self.image
-        self.rect
+        self.image = pygame.image.load(join('images', 'player.png')).convert_alpha() #stores the surface
+        self.rect = self.image.get_frect(midbottom = (window_width/2, window_height / 2))
 # ramas la 1:57:00  
 
 # general setup
