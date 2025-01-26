@@ -11,12 +11,16 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.Vector2()
         self.speed = 300
 
-    def update(self, *args, **kwargs):
+    def update(self, dt, *args, **kwargs):
         keys = pygame.key.get_pressed()
         self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
-        self.direction.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_DOWN])
+        self.direction.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])
         self.direction = self.direction.normalize() if self.direction else self.direction
         self.rect.center += self.direction * self.speed * dt
+
+        recent_keys = pygame.key.get_just_pressed()
+        if recent_keys[pygame.K_SPACE]:
+           print('fire laser')
 
 # ramas la 1:57:00
 
@@ -85,7 +89,7 @@ while running:
     # if recent_keys[pygame.K_SPACE]:
     #    print('fire laser')
 
-    all_sprites.update() # call an update method on the sprites in the group
+    all_sprites.update(dt) # call an update method on the sprites in the group
 
     # draw the game
     display_surface.fill('skyblue3', rect=None, special_flags=0) # display the background color 
