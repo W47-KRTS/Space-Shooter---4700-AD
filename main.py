@@ -8,7 +8,16 @@ class Player(pygame.sprite.Sprite):
         super().__init__(*groups)
         self.image = pygame.image.load(join('images', 'player.png')).convert_alpha() #stores the surface
         self.rect = self.image.get_frect(midbottom = (window_width/2, window_height / 2))
-# ramas la 1:57:00  
+        self.direction = pygame.Vector2()
+
+    def update(self, *args, **kwargs):
+        keys = pygame.key.get_pressed()
+        self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
+        self.direction.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_DOWN])
+
+
+# ramas la 1:57:00
+
 
 # general setup
 
@@ -70,9 +79,11 @@ while running:
     # make the diagonal movement 1 by making x and y smaller
     # player_rect.center += player_direction * player_speed * dt
 
-    recent_keys = pygame.key.get_just_pressed()
-    if recent_keys[pygame.K_SPACE]:
-        print('fire laser')
+    # recent_keys = pygame.key.get_just_pressed()
+    # if recent_keys[pygame.K_SPACE]:
+    #    print('fire laser')
+
+    all_sprites.update() # call an update method on the sprites in the group
 
     # draw the game
     display_surface.fill('skyblue3', rect=None, special_flags=0) # display the background color 
