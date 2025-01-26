@@ -66,7 +66,7 @@ while running:
     # player_rect.center += player_direction * player_speed * dt
 
     recent_keys = pygame.key.get_just_pressed()
-    if keys[pygame.K_SPACE]:
+    if recent_keys[pygame.K_SPACE]:
         print('fire laser')
 
     # draw the game
@@ -76,7 +76,7 @@ while running:
         
     display_surface.blit(meteor_surf, meteor_rect) # display meteor
     display_surface.blit(laser_surf, laser_rect) # display laser
-    display_surface.blit(player_surf, player_rect) # display the player ship
+    # display_surface.blit(player_surf, player_rect) # display the player ship
 
     pygame.display.update() # update the entire window
 
