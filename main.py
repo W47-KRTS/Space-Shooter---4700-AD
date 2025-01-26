@@ -3,6 +3,8 @@ from os.path import join
 
 from random import randint  
 
+# ramas la 2:08:00
+
 class Player(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super().__init__(*groups)
@@ -21,9 +23,6 @@ class Player(pygame.sprite.Sprite):
         recent_keys = pygame.key.get_just_pressed()
         if recent_keys[pygame.K_SPACE]:
            print('fire laser')
-
-# ramas la 1:57:00
-
 
 # general setup
 
