@@ -26,12 +26,11 @@ surf.fill("orange")
 x = 100
 
 # importing images
-player_surf = pygame.image.load(join('images','player.png')).convert_alpha()
-player_rect = player_surf.get_frect(midbottom = (window_width/2, window_height / 2))
+# player_surf = pygame.image.load(join('images','player.png')).convert_alpha()
+# player_rect = player_surf.get_frect(midbottom = (window_width/2, window_height / 2))
 # using frectangle to determine the position
-
-player_direction = pygame.math.Vector2() # (0,0)
-player_speed = 300
+# player_direction = pygame.math.Vector2() # (0,0)
+# player_speed = 300
 
 
 meteor_surf = pygame.image.load(join('images','meteor.png')).convert_alpha()
