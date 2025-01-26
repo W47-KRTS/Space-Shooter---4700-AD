@@ -58,14 +58,12 @@ while running:
         #    player_rect.center = event.pos
 
     # input
-    keys = pygame.key.get_pressed()
-    player_direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])  # player to right when right key is pressed
-    player_direction.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])
-    
-    player_direction = player_direction.normalize() if player_direction else player_direction 
+    # keys = pygame.key.get_pressed()
+    # player_direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])  # player to right when right key is pressed
+    # player_direction.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])
+    # player_direction = player_direction.normalize() if player_direction else player_direction 
     # make the diagonal movement 1 by making x and y smaller
-
-    player_rect.center += player_direction * player_speed * dt
+    # player_rect.center += player_direction * player_speed * dt
 
     recent_keys = pygame.key.get_just_pressed()
     if keys[pygame.K_SPACE]:
