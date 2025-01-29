@@ -25,9 +25,9 @@ class Player(pygame.sprite.Sprite):
            print('fire laser')
 
 class Star(pygame.sprite.Sprite):
-    def __init__(self, *groups):
+    def __init__(self, *groups, surf):
         super().__init__(*groups)
-        self.image = pygame.image.load(join('images', 'star.png')).convert_alpha()
+        self.image = surf
         self.rect = self.image.get_frect(center = (randint(0, window_width), randint(0, window_height)))
 # general setup
 
@@ -46,7 +46,13 @@ x = 100
 
 
 all_sprites = pygame.sprite.Group()
-player = Player(all_sprites)
+
+
+star_surf = pygame.image.load(join('images', 'star.png')).convert_alpha() #import the image once
+for i in range(20):
+    Star(all_sprites, star_surf) # using the same surface 20 times
+
+player = Player(all_sprites) # create player after the stars
 
 
 # importing images
@@ -56,8 +62,7 @@ player = Player(all_sprites)
 # player_direction = pygame.math.Vector2() # (0,0)
 # player_speed = 300
 
-for i in range(20):
-    Star(all_sprites)
+
 
 meteor_surf = pygame.image.load(join('images','meteor.png')).convert_alpha()
 meteor_rect = meteor_surf.get_frect(center = (window_width/2, window_height/2))
