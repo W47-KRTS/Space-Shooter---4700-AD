@@ -47,10 +47,9 @@ x = 100
 
 all_sprites = pygame.sprite.Group()
 
-
 star_surf = pygame.image.load(join('images', 'star.png')).convert_alpha() #import the image once
 for i in range(20):
-    Star(all_sprites, star_surf) # using the same surface 20 times
+    Star(all_sprites, surf=star_surf) # using the same surface 20 times
 
 player = Player(all_sprites) # create player after the stars
 
@@ -74,6 +73,10 @@ laser_rect = laser_surf.get_frect(bottomleft = (20, window_height - 50))
 # star_position = [(randint(0,window_width), randint(0, window_height)) for i in range (50)]
 # drawing stars in random positions
 
+# custom events -> meteor event
+meteor_event = pygame.event.custom_type()
+pygame.time.set_timer(meteor_event, 500) # timer
+
 
 while running:
     dt = clock.tick() / 1000
@@ -83,6 +86,8 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False # variable to close the game
+        if event.type == meteor_event:
+            print("create meteor")
         #if event.type == pygame.KEYDOWN and event.key == pygame.K_1:
         #    print(1)
         #if event.type == pygame.MOUSEMOTION:
@@ -100,6 +105,7 @@ while running:
     # if recent_keys[pygame.K_SPACE]:
     #    print('fire laser')
 
+    # update the game
     all_sprites.update(dt) # call an update method on the sprites in the group
 
     # draw the game
