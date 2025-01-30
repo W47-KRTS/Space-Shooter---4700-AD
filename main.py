@@ -3,7 +3,7 @@ from os.path import join
 
 from random import randint, uniform  
 
-# ramas la 2:08:00
+# ramas la 2:39:00
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, *groups):
@@ -71,6 +71,8 @@ class Meteor(pygame.sprite.Sprite):
         self.rect.center += self.direction * self.speed * dt
         if pygame.time.get_ticks() - self.start_time >= self.lifetime:
             self.kill()
+
+
 
 # general setup
 pygame.init()
