@@ -13,6 +13,18 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.Vector2()
         self.speed = 300
 
+        #cooldown
+        self.can_shoot = True
+        self.laser_shoot_time = 0
+        self.cooldown_duration = 400
+
+    def laser_timer(self):
+        if not self.can_shoot: #RUN code if the player cannot shoot
+            current_time = pygame.time.get_ticks() # get the time continuesly
+            if current_time - self.laser_shoot_time >= self.cooldown_duration: # runs continuously
+                self.can_shoot = True
+
+
     def update(self, dt, *args, **kwargs):
         keys = pygame.key.get_pressed()
         self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
@@ -21,8 +33,12 @@ class Player(pygame.sprite.Sprite):
         self.rect.center += self.direction * self.speed * dt
 
         recent_keys = pygame.key.get_just_pressed()
-        if recent_keys[pygame.K_SPACE]:
-           print('fire laser')
+        if recent_keys[pygame.K_SPACE] and self.can_shoot: # it s trigger only when the player shoots the laser
+            print('fire laser')
+            self.can_shoot = False
+            self.laser_shoot_time = pygame.time.get_ticks()
+
+        self.laser_timer()
 
 class Star(pygame.sprite.Sprite):
     def __init__(self, *groups, surf):
