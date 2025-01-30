@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
         #cooldown
         self.can_shoot = True
         self.laser_shoot_time = 0
-        self.cooldown_duration = 400
+        self.cooldown_duration = 200
 
     def laser_timer(self):
         if not self.can_shoot: #RUN code if the player cannot shoot
@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite):
 
         recent_keys = pygame.key.get_just_pressed()
         if recent_keys[pygame.K_SPACE] and self.can_shoot: # it s trigger only when the player shoots the laser
-            print('fire laser')
+            Laser(laser_surf, self.rect.midtop, all_sprites)
             self.can_shoot = False
             self.laser_shoot_time = pygame.time.get_ticks()
 
@@ -45,8 +45,18 @@ class Star(pygame.sprite.Sprite):
         super().__init__(*groups)
         self.image = surf
         self.rect = self.image.get_frect(center = (randint(0, window_width), randint(0, window_height)))
-# general setup
 
+class Laser(pygame.sprite.Sprite):
+    def __init__(self, surf, pos, *groups):
+        super().__init__(*groups)
+        self.image = surf
+        self.rect = self.image.get_frect(midbottom = pos)
+
+    def update(self, dt):
+        self.rect.centery -= 400 * dt
+        if self.rect.bottom <= 0: # the laster left the window game
+            self.kill() # destroy laser sprite
+# general setup
 pygame.init()
 
 window_width, window_height = 1280, 720 
@@ -80,10 +90,10 @@ player = Player(all_sprites) # create player after the stars
 
 
 meteor_surf = pygame.image.load(join('images','meteor.png')).convert_alpha()
-meteor_rect = meteor_surf.get_frect(center = (window_width/2, window_height/2))
+# meteor_rect = meteor_surf.get_frect(center = (window_width/2, window_height/2))
 
 laser_surf = pygame.image.load(join('images','laser.png')).convert_alpha()
-laser_rect = laser_surf.get_frect(bottomleft = (20, window_height - 50))
+# laser_rect = laser_surf.get_frect(bottomleft = (20, window_height - 50))
 
 # star_surf =  pygame.image.load(join('images','star.png')).convert_alpha()
 # star_position = [(randint(0,window_width), randint(0, window_height)) for i in range (50)]
@@ -122,6 +132,7 @@ while running:
     #    print('fire laser')
 
     # update the game
+
     all_sprites.update(dt) # call an update method on the sprites in the group
 
     # draw the game
@@ -130,8 +141,8 @@ while running:
     # for position in star_position: # display the stars
     #    display_surface.blit(star_surf, position)
         
-    display_surface.blit(meteor_surf, meteor_rect) # display meteor
-    display_surface.blit(laser_surf, laser_rect) # display laser
+    # display_surface.blit(meteor_surf, meteor_rect) # display meteor
+    # display_surface.blit(laser_surf, laser_rect) # display laser
     # display_surface.blit(player_surf, player_rect) # display the player ship
 
     all_sprites.draw(display_surface)
