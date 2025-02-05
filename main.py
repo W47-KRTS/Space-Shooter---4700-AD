@@ -4,6 +4,12 @@ import os
 os.environ['SDL_AUDIODRIVER'] = 'dummy'
 from random import randint, uniform  
 
+import logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+logger.debug("Program starting...")
+
 # ramas la 2:39:00
 
 class Player(pygame.sprite.Sprite):
@@ -76,7 +82,11 @@ class Meteor(pygame.sprite.Sprite):
 
 
 # general setup
+
+logger.debug("About to initialize pygame")
 pygame.init()
+logger.debug("Pygame initialized")
+
 
 window_width, window_height = 1280, 720 
 display_surface = pygame.display.set_mode((window_width, window_height))
@@ -88,6 +98,8 @@ clock = pygame.time.Clock()
 meteor_surf = pygame.image.load(join('images','meteor.png')).convert_alpha()
 laser_surf = pygame.image.load(join('images','laser.png')).convert_alpha()
 star_surf = pygame.image.load(join('images', 'star.png')).convert_alpha() #import the image once
+
+logger.debug("imports")
 
 # sprites
 all_sprites = pygame.sprite.Group()
@@ -111,9 +123,34 @@ while running:
         if event.type == meteor_event:
             x, y = randint(0, window_width), randint(-200, -100)
             Meteor(meteor_surf, (x,y), all_sprites)
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                paused = not paused
      
     # update the game
     all_sprites.update(dt) # call an update method on the sprites in the group
+
+    # Inside the game loop, after updating sprites
+    meteor_collisions = pygame.sprite.spritecollide(player, all_sprites, dokill=True)
+    if meteor_collisions:
+        logger.debug("Player hit by meteor!")
+        running = False  # End the game if the player is hit
+
+    for laser in all_sprites:
+        if isinstance(laser, Laser):
+            meteor_hits = pygame.sprite.spritecollide(laser, all_sprites, dokill=True)
+            for meteor in meteor_hits:
+                if isinstance(meteor, Meteor):
+                    logger.debug("Meteor destroyed!")
+
+    # pause game
+    if not paused:
+        all_sprites.update(dt)
+    else:
+        font = pygame.font.Font(None, 74)
+        text = font.render("Paused", True, 'white')
+        display_surface.blit(text, (window_width // 2 - 100, window_height // 2 - 50))
 
     # draw the game
     display_surface.fill('skyblue3', rect=None, special_flags=0) # display the background color 
