@@ -1,6 +1,7 @@
 import pygame
 from os.path import join   
-
+import os
+os.environ['SDL_AUDIODRIVER'] = 'dummy'
 from random import randint, uniform  
 
 # ramas la 2:39:00
@@ -116,8 +117,10 @@ while running:
 
     # draw the game
     display_surface.fill('skyblue3', rect=None, special_flags=0) # display the background color 
-    
     all_sprites.draw(display_surface)
+
+    # test collision
+    player.rect.collidepoint((100,200))
 
     pygame.display.update() # update the entire window
    

@@ -6,5 +6,5 @@
 
 tasks:
   - command: python main.py
-
+  - command: pip install pygame-ce
 
